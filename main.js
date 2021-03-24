@@ -1,150 +1,33 @@
-$(document).ready(function() {
-  dx();
-  sx();
-  setIds();
-  nav();
-  keyBoard();
-});
+var app = new Vue({
+  el: '#root',
+  data: {
+    index: 0,
+    images: [
+      'https://images.pexels.com/photos/371633/pexels-photo-371633.jpeg',
+      'https://static.photocdn.pt/images/articles/2017/04/28/iStock-646511634.jpg',
+      'https://cdn.mos.cms.futurecdn.net/FUE7XiFApEqWZQ85wYcAfM.jpg',
+      'https://static.photocdn.pt/images/articles/2017/04/28/iStock-546424192.jpg'
+    ],
+  },
 
-function keyBoard(){
-  $(document).keypress(function(e) {
-    if (e.keyCode == '39'){
-      var foto = $('img.active');
-      var pallino = $('i.active');
-
-      if (foto.hasClass('last')) {
-        var fotoDx = $('img.first');
-        var pallinoDx = $('i.first');
+  methods: {
+    next: function (){
+      if (this.index === this.images.length - 1) {
+        this.index = 0;
       } else {
-        var fotoDx = foto.next('img');
-        var pallinoDx = pallino.next('i');
-
+        this.index++
       }
-
-      fotoDx.addClass('active');
-      foto.removeClass('active');
-
-      pallinoDx.addClass('active');
-      pallino.removeClass('active');
-
-    } else
-
-    if (e.keyCode == '37') {
-      var foto = $('img.active');
-      var pallino = $('i.active');
-
-      if (foto.hasClass('first')) {
-        var fotoSx = $('img.last');
-        var pallinoSx = $('i.last');
+    },
+    prev: function (){
+      if (this.index === 0) {
+        this.index = this.images.length - 1;
       } else {
-        var fotoSx = foto.prev('img');
-        var pallinoSx = pallino.prev('i');
-
+        this.index--;
       }
-
-      fotoSx.addClass('active');
-      foto.removeClass('active');
-
-      pallinoSx.addClass('active');
-      pallino.removeClass('active');
-
+    },
+    change: function(index){
+      this.index = index;
     }
-  });
-
-}
-
-
-
-
-
-
-function setIds(){
-  for (var i = 0; i < immagini.length; i++) {
-    immagini[i].setAttribute('id', i+1);
-    pallini[i].setAttribute('id', i+1);
   }
-}
 
-function dx() {
-  var frecciaDx = $('.fa-angle-right');
-
-
-  frecciaDx.click(function() {
-    var foto = $('img.active');
-    var pallino = $('i.active');
-
-    if (foto.hasClass('last')) {
-      var fotoDx = $('img.first');
-      var pallinoDx = $('i.first');
-    } else {
-      var fotoDx = foto.next('img');
-      var pallinoDx = pallino.next('i');
-
-    }
-
-    fotoDx.addClass('active');
-    foto.removeClass('active');
-
-    pallinoDx.addClass('active');
-    pallino.removeClass('active');
-  });
-};
-
-
-function sx() {
-  var frecciaSx = $('.fa-angle-left');
-
-  frecciaSx.click(function() {
-    var foto = $('img.active');
-    var pallino = $('i.active');
-
-    if (foto.hasClass('first')) {
-      var fotoSx = $('img.last');
-      var pallinoSx = $('i.last');
-    } else {
-      var fotoSx = foto.prev('img');
-      var pallinoSx = pallino.prev('i');
-
-    }
-
-    fotoSx.addClass('active');
-    foto.removeClass('active');
-
-    pallinoSx.addClass('active');
-    pallino.removeClass('active');
-  });
-
-
-
-
-}
-
-var immagini = $('div.images img');
-var pallini = $('div.nav i')
-
-
-
-
-function nav() {
-
-  pallini.click(function(){
-    var id = this.getAttribute('id');
-    var immagineNew = $('.images img#' + id);
-    var immagineOld = $('img.active');
-
-    var pallinoNew = pallini[id - 1];
-    var pallinoOld = $('i.active');
-    pallinoOld.removeClass('active');
-    $(pallinoNew).addClass('active');
-
-
-    switch (immagineNew.hasClass()) {
-      case !'active':
-        immagineNew.addClass('active');
-        immagineOld.removeClass('active');
-        break;
-    }
-
-
-  });
-}
+})
