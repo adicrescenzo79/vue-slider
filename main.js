@@ -27,7 +27,20 @@ var app = new Vue({
     },
     change: function(index){
       this.index = index;
+    },
+    auto: function(){
+      let nuovo = this;
+      setInterval (function(){
+        if (nuovo.index === nuovo.images.length - 1) {
+          nuovo.index = 0;
+        } else {
+          nuovo.index++
+        }
+      }, 3000);
     }
+  },
+  mounted () {
+    this.auto()
   }
 
 })
